@@ -5,12 +5,12 @@ function App() {
   useEffect(() => {
     fetch('https://cicddemo-1.onrender.com/health')
       .then(res => res.json())
-      .then(data => setData(data))
+      .then(data => setData(data.status))
   }, []);
   return (
     <div>App
 
-      API Health Check: {data ? JSON.stringify(data) : 'Loading...'}
+      API Health Check: {data ? JSON.stringify(data) : 'Loading...'}s
     </div>
   )
 }

@@ -1,0 +1,39 @@
+name: React CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-node-version: 20 # Match your local Node version
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run Linter (Optional)
+      run: npm run lint --if-present
+
+    - name: Run Tests
+      run: npm test -- --watchAll=false --passWithNoTests
+
+    - name: Build Application
+      run: npm run build
+
+    # ... previous steps (Install, Test, Build)
+
+    - name: Trigger Render Deploy
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}"
