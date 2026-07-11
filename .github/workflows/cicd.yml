@@ -35,5 +35,5 @@ jobs:
     # ... previous steps (Install, Test, Build)
 
     - name: Trigger Render Deploy
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'pull_request')
       run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}"

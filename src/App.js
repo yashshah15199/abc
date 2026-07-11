@@ -10,7 +10,7 @@ function App() {
   return (
     <div>App
 
-      API Health Check: {data ? JSON.stringify(data) : 'Loading...'}s
+      API Health Check: {data ? JSON.stringify(data) : 'Loading...******'}s
     </div>
   )
 }
